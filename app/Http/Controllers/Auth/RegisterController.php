@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Location;
+use App\Rules\isValidLocation;
+use Illuminate\Validation\Rule;
+
 
 class RegisterController extends Controller
 {
@@ -51,16 +55,22 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         
+        $country_invalid = 'Invalid Country.';
         $messages = [
-            //Setting up a custom messages array for handling geocoding validation errors later.
+            'country.min' => $country_invalid,
+            'country.max' => $country_invalid,
+            'country.in' => $country_invalid
         ];
+
+        $countries = new Location;
+        $country_codes = array_keys((array) $countries->all_countries());
 
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'postal_code' => ['required', 'string'],
-            'country' => ['required', 'string', 'min:2', 'max:2']
+            'postal_code' => ['required', 'string', new isValidLocation],
+            'country' => ['required', 'string', 'min:2', 'max:2', Rule::in($country_codes)]
         ], $messages);
     }
 

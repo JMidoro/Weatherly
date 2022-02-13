@@ -77,11 +77,16 @@
                             <label for="country" class="col-md-4 col-form-label text-md-end">{{ __('Country') }}</label>
 
                             <div class="col-md-6">
-                                <select id="country" type="text" class="form-control" name="country" required>
+                                <select id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="country" required>
                                     @foreach ($countries as $code => $country)
                                         <option value='{{$code}}'{{ $code == $user_country ? ' selected' : ''}}>{{$country}}</option>
                                     @endforeach
                                 </select>
+                                @error('country')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
 

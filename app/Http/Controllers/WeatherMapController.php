@@ -18,11 +18,19 @@ class WeatherMapController extends Controller
         if ($response->successful()) {
             return $response->json();
         } else {
-            //Request unsuccessful. Throw an exception for now.
-            $response->throw();
+            return $response->json();
         }
         
         return false;
+    }
+
+    public function geocodeValidation($user_location) {
+        $response = Http::get('http://api.openweathermap.org/geo/1.0/zip', [
+            'zip' => "{$user_location->zip},{$user_location->country}",
+            'appid' => env('WEATHERMAP_API_KEY')
+        ]);
+
+        return $response->json();
     }
 
     public function forecast($geocoded_location) {
