@@ -63,7 +63,6 @@
 
                         <div class="row mb-3">
                             <label for="postal_code" class="col-md-4 col-form-label text-md-end">{{ __('Postal Code') }}</label>
-
                             <div class="col-md-6">
                                 <input id="postal_code" type="text" class="form-control @error('postal_code') is-invalid @enderror" name="postal_code" required autocomplete="postal_code" value="{{ old('postal_code') }}">
                                 @error('postal_code')
@@ -71,10 +70,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                
                             </div>
-
-                            
                         </div>
 
                         <div class="row mb-3">
