@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
 class CreateUsersTable extends Migration
 {
@@ -21,7 +22,22 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->json('location');
         });
+
+        //Creating Admin user
+        $default_location = (object) array(
+            'postal_code' => env('DEFAULT_POSTAL_CODE'),
+            'country' => env('DEFAULT_COUNTRY')
+        );
+        
+        User::create([
+            'name' => env('ADMIN_ACCOUNT_USERNAME'),
+            'email' =>  env('ADMIN_ACCOUNT_EMAIL'),
+            'location' =>  json_encode($default_location),
+            'password' => Hash::make(env('ADMIN_ACCOUNT_PASS')),
+        ]);
+
     }
 
     /**
