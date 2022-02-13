@@ -83,7 +83,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $location = (object) array(
-            'postal_code' => $data['postal_code'],
+            'zip' => $data['postal_code'],
             'country' => $data['country']
         );
 

@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Location;
+use App\Http\Controllers\WeatherMapController;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    protected $user;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -24,6 +22,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = auth()->user();
+        $forecast = WeatherMapController::getForecast(json_decode($user->location));
+
+        date_default_timezone_set($forecast['timezone']);
+
+
+        return view('home', [
+            'user' => $user,
+            'forecast' => $forecast
+        ]);
     }
 }
