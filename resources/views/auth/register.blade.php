@@ -78,7 +78,7 @@
 
                             <div class="col-md-6">
                                 <select id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="country" required>
-                                    @foreach ($countries as $code => $country)
+                                    @foreach ($all_countries as $code => $country)
                                         <option value='{{$code}}'{{ $code == $user_country ? ' selected' : ''}}>{{$country}}</option>
                                     @endforeach
                                 </select>

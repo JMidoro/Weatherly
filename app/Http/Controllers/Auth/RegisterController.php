@@ -105,10 +105,8 @@ class RegisterController extends Controller
             $user_country = $location_json['country'];
         }
 
-        $locations = new Location;
         return view('auth.register', [
             'user_country' => $user_country,
-            'countries' => $locations->all_countries()
         ]);
     }
     
