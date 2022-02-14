@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\WeatherMapController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,9 @@ Auth::routes();
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/weather/{country}-{zip}/{day}', [App\Http\Controllers\HomeController::class, 'day'])->name('weather.day');
+
+Route::prefix('weather')->group(function() {
+    Route::get('/{country}-{zip}', [HomeController::class, 'forecast'])->name('weather.forecast');
+    Route::get('/{country}-{zip}/{day}', [HomeController::class, 'day'])->name('weather.day');
+    Route::post('/', [HomeController::class, 'lookup'])->name('weather.lookup');
+});

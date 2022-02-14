@@ -52,7 +52,25 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
+                            <li class="nav-item">
+                            <form id="location-form" action="{{ route('weather.lookup') }}" method="POST" class="row justify-content-end">
+                                <div class='col-3 m-1 p-0'>
+                                    <input id="location_form_zip" name="zip" type="text" class="form-control" placeholder="Postal Code"/>
+                                </div>
+                                <div class='col-5 m-1 p-0'>
+                                    <select id="location_form_country" name="country" class="form-control">
+                                        @foreach ($all_countries as $code => $country)
+                                            <option value={{$code}} {{strpos(Auth::user()->location, $code) ? 'selected': ''}}>{{$country}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class='col-2 m-1 p-0'>
+                                    <button class="btn-primary form-control">Submit</button>
+                                </div>
+                                @csrf
+                            </form>
+                            </li>
+                            <li class="nav-item dropdown px-3">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>

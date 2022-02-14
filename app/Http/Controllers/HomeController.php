@@ -49,8 +49,34 @@ class HomeController extends Controller
         date_default_timezone_set($forecast['timezone']);
 
         return view('weather.day', [
-            'user' => $user,
             'day' => $forecast['daily'][$day]
         ]);
+    }
+
+    public function forecast($country, $zip)
+    {
+        $location = (object) array(
+            'zip' => $zip,
+            'country' => strtoupper($country)
+        );
+
+        $user = auth()->user();
+        $forecast = WeatherMapController::getForecast($location);
+
+        if (!$forecast) {
+            return abort(404);
+        }
+
+        date_default_timezone_set($forecast['timezone']);
+
+        return view('weather.forecast', [
+            'forecast' => $forecast,
+            'location' => $location
+        ]);
+    }
+
+    public function lookup (Request $request) {
+        $input = $request->all();
+        return redirect("/weather/{$input['country']}-{$input['zip']}");
     }
 }

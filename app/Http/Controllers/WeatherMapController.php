@@ -24,16 +24,12 @@ class WeatherMapController extends Controller
         return false;
     }
 
-    public function geocodeValidation($user_location) {
-        $response = Http::get('http://api.openweathermap.org/geo/1.0/zip', [
-            'zip' => "{$user_location->zip},{$user_location->country}",
-            'appid' => env('WEATHERMAP_API_KEY')
-        ]);
-
-        return $response->json();
-    }
-
     public function forecast($geocoded_location) {
+
+        if (!isset($geocoded_location['lat']) || !isset($geocoded_location['lon'])) {
+            return false;
+        }
+        
         $params = [
             'appid' => env('WEATHERMAP_API_KEY'),
             'lat' => $geocoded_location['lat'],
