@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WeatherMapController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\WeatherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +25,12 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
 
 Route::prefix('weather')->group(function() {
-    Route::get('/{country}-{zip}', [HomeController::class, 'forecast'])->name('weather.forecast');
-    Route::get('/{country}-{zip}/{day}', [HomeController::class, 'day'])->name('weather.day');
-    Route::post('/', [HomeController::class, 'lookup'])->name('weather.lookup');
+    Route::get('/{country}-{zip}', [WeatherController::class, 'forecast'])->name('weather.forecast');
+    Route::get('/{country}-{zip}/{day}', [WeatherController::class, 'day'])->name('weather.day');
+    Route::post('/', [WeatherController::class, 'lookup'])->name('weather.lookup');
 });

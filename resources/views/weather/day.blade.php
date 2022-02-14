@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="container">
-    <x-day :day="$day"/>
+    <x-day :location="$location" :day="$day"/>
 </div>
 @endsection
