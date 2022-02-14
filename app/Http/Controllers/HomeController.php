@@ -75,8 +75,10 @@ class HomeController extends Controller
         ]);
     }
 
-    public function lookup (Request $request) {
+    public function lookup(Request $request) {
         $input = $request->all();
         return redirect("/weather/{$input['country']}-{$input['zip']}");
     }
+
+    
 }

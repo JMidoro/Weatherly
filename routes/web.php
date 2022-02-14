@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\WeatherMapController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,8 @@ Auth::routes();
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
 
 Route::prefix('weather')->group(function() {
     Route::get('/{country}-{zip}', [HomeController::class, 'forecast'])->name('weather.forecast');
