@@ -56,10 +56,12 @@ class WeatherMapController extends Controller
     public function getForecast($user_location) {
         $result_key = "{$user_location->country}-{$user_location->zip}";
 
+        //Implemented caching for API requests. Configurable in .env
+        //Default is 600 seconds, since the API docs recommend calling no more than once every ten minutes for the same location.
         if (!Cache::has($result_key)) {
             $geocoded_location = self::geocoded($user_location);
             $forecast = self::forecast($geocoded_location);
-            Cache::put($result_key, $forecast, 600);
+            Cache::put($result_key, $forecast, env('CACHE_VALID_SECONDS'));
 
             return $forecast;
             

@@ -32,8 +32,47 @@
                                         <div>Moonset: {{ date("g:i a", $attributes['day']['moonset']) }}</div>
                                         <div>Clouds: {{ $attributes['day']['clouds'] }}%</div>
                                     </div>
-                                    <div class="col-md-2 p-3">
-                                        <div>Moon Phase: {{ $attributes['day']['moon_phase'] }}</div>
+                                    <div class="col-md-4 p-3">
+                                        <div>Moon Phase: 
+                                            @switch(true)
+                                                @case($attributes['day']['moon_phase'] === 0 || $attributes['day']['moon_phase'] === 1)
+                                                    New Moon
+                                                    @break
+
+                                                @case($attributes['day']['moon_phase'] > 0 && $attributes['day']['moon_phase'] < 0.25)
+                                                    Waxing Crescent
+                                                    @break
+
+                                                @case($attributes['day']['moon_phase'] === 0.25)
+                                                    First Quarter Moon
+                                                    @break
+
+                                                @case($attributes['day']['moon_phase'] > 0.25 && $attributes['day']['moon_phase'] < 0.5)
+                                                    Waxing Gibous
+                                                    @break
+
+                                                @case($attributes['day']['moon_phase'] === 0.5)
+                                                    Full Moon
+                                                    @break
+
+                                                @case($attributes['day']['moon_phase'] > 0.5 && $attributes['day']['moon_phase'] < 0.75)
+                                                    Waning Gibous
+                                                    @break
+
+                                                @case($attributes['day']['moon_phase'] === 0.75)
+                                                    Last Quarter Moon
+                                                    @break
+
+                                                @case($attributes['day']['moon_phase'] > 0.75 && $attributes['day']['moon_phase'] < 1)
+                                                    Waning Crescent
+                                                    @break
+
+                                            @endswitch
+                                                
+                                                
+                                                
+
+                                        </div>
                                         <div>Low: {{$attributes['day']['temp']['min']}}&deg; {{$attributes['location']->country == "US" ? 'F' : 'C'}}</div>
                                         <div>High: {{$attributes['day']['temp']['max']}}&deg; {{$attributes['location']->country == "US" ? 'F' : 'C'}}</div>
                                     </div>
