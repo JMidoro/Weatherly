@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
 
         //Creating Admin user
         $default_location = (object) array(
-            'postal_code' => env('DEFAULT_POSTAL_CODE'),
+            'zip' => env('DEFAULT_POSTAL_CODE'),
             'country' => env('DEFAULT_COUNTRY')
         );
         

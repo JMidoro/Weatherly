@@ -23,3 +23,4 @@ Auth::routes();
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/weather/{country}-{zip}/{day}', [App\Http\Controllers\HomeController::class, 'day'])->name('weather.day');

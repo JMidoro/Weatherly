@@ -18,7 +18,7 @@
 
                 <div class="card-body bg-dark h-100">
                     @foreach ($forecast['daily'] as $index => $day)
-                    <a href="#">
+                    <a href="{{ route('weather.day', [$location->country, $location->zip, $index]) }}">
                         <div role="button" class='button bg-dark text-white d-inline-block shadow-lg py-5' style="margin:0px; padding:0px; width:calc(97% / 8);">
                             <div class='card-body'>
                                 <h4>{{ date("d M Y", $day['sunrise']) }}</h4>
@@ -29,35 +29,10 @@
                                         <div class="bold text-center">
                                             {{ $weather['main'] }}
                                         </div>
-                                        <div class="bold text-center">
+                                        <div class="small text-center">
                                             {{ $weather['description'] }}
                                         </div>
                                         @endforeach
-                                    </div>
-                                </div>
-                                <div class="row d-none">
-                                    <div class="col-md-3">
-                                        <p>Sunrise: {{ date("g:i a", $day['sunrise']) }}</p>
-                                        <p>Sunset: {{ date("g:i a", $day['sunset']) }}</p>
-                                        <p>Moonrise: {{ date("g:i a", $day['moonrise']) }}</p>
-                                        <p>Moonset: {{ date("g:i a", $day['moonset']) }}</p>
-                                        <p>Moon Phase: {{ $day['moon_phase'] }}</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p>Temperature: Array</p>
-                                        <p>Feels Like: Array</p>
-                                        <p>Pressure: {{ $day['pressure'] }}</p>
-                                        <p>Humidity: {{ $day['humidity'] }}</p>
-                                        <p>Dew Point: {{ $day['dew_point'] }}</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p>Weather: Array</p>
-                                        <p>Wind Speed: {{ $day['wind_speed'] }}</p>
-                                        <p>Wind Degrees?: {{ $day['wind_deg'] }}</p>
-                                        <p>Wind Gust: {{ $day['wind_gust'] }}</p>
-                                        <p>Clouds: {{ $day['clouds'] }}</p>
-                                        <p>Pop: {{ $day['pop'] }}</p>
-                                        <p>Uvi: {{ $day['uvi'] }}</p>
                                     </div>
                                 </div>
                             </div>

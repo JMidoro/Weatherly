@@ -23,14 +23,34 @@ class HomeController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $forecast = WeatherMapController::getForecast(json_decode($user->location));
+        $location = json_decode($user->location);
+        $forecast = WeatherMapController::getForecast($location);
 
         date_default_timezone_set($forecast['timezone']);
 
 
         return view('home', [
             'user' => $user,
-            'forecast' => $forecast
+            'forecast' => $forecast,
+            'location' => $location
+        ]);
+    }
+
+    public function day($country, $zip, $day)
+    {
+        $location = (object) array(
+            'zip' => $zip,
+            'country' => strtoupper($country)
+        );
+
+        $user = auth()->user();
+        $forecast = WeatherMapController::getForecast($location);
+
+        date_default_timezone_set($forecast['timezone']);
+
+        return view('weather.day', [
+            'user' => $user,
+            'day' => $forecast['daily'][$day]
         ]);
     }
 }
